@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #74ebd5, #ACB6E5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 40px 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #007BFF;
+        }
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+            flex-grow: 1;
+            transition: all 0.3s ease;
+        }
+        input[type="text"]:focus {
+            border-color: #007BFF;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .weather-info {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .weather-info h2 {
+            margin-bottom: 10px;
+            font-size: 24px;
+            color: #7f6060;
+        }
+        .weather-info p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        .weather-info img {
+            vertical-align: middle;
+            animation: move 5s infinite alternate ease-in-out;
+            filter: hue-rotate(90deg) brightness(1.2);
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        @keyframes move {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(20px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather App</h1>
+        <form method="get" action="">
+            <input type="text" name="city" placeholder="Enter city" value="{{ city|default:'' }}">
+            <button type="submit">Get Weather</button>
+        </form>
+        {% if city %}
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% else %}
+                <div class="weather-info">
+                    <h2>Weather in {{ city }}</h2>
+                    <p><strong>Temperature:</strong> {{ temperature }}°C</p>
+                    <p><strong>Description:</strong> {{ description }}</p>
+                    <p><strong>Humidity:</strong> {{ humidity }}%</p>
+                    <p><strong>Wind Speed:</strong> {{ wind_speed }} m/s</p>
+                    <p><strong>Pressure:</strong> {{ pressure }} hPa</p>
+                    <img src="http://openweathermap.org/img/wn/{{ icon }}@2x.png" alt="Weather icon" class="weather-icon">
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
